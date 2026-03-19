@@ -1,5 +1,7 @@
 # Next.js + Supabase + Creem Starter
 
+[![CI](https://github.com/aaronpal/nextjs-supabase-creem-starter/actions/workflows/ci.yml/badge.svg)](https://github.com/aaronpal/nextjs-supabase-creem-starter/actions/workflows/ci.yml)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/aaronpal/nextjs-supabase-creem-starter)
 ![Status](https://img.shields.io/badge/status-work--in--progress-yellow)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 
