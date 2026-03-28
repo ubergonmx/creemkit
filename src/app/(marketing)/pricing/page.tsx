@@ -1,5 +1,5 @@
-import { PricingSection } from "@/features/billing/components/pricing-section";
-import { FaqsSection } from "@/features/billing/components/faqs-section";
+import { PricingSection } from '@/features/billing/components/pricing-section'
+import { FaqsSection } from '@/features/billing/components/faqs-section'
 
 export default function PricingPage() {
   return (
@@ -7,5 +7,5 @@ export default function PricingPage() {
       <PricingSection />
       <FaqsSection />
     </>
-  );
+  )
 }

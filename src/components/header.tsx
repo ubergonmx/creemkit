@@ -1,61 +1,98 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { Logo } from "@/components/logo";
-import { useScroll } from "@/hooks/use-scroll";
-import { Button } from "@/components/ui/button";
-import { MobileNav } from "@/components/mobile-nav";
+'use client'
+import Link from 'next/link'
+import { Logo } from '@/components/logo'
+import { Menu, X } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import React from 'react'
+import { cn } from '@/lib/utils'
+import { useScroll } from 'motion/react'
 
-export const navLinks = [
-	{
-		label: "Features",
-		href: "/#features",
-	},
-	{
-		label: "Pricing",
-		href: "/pricing",
-	},
-];
+const menuItems = [
+  { name: 'Features', href: '#features' }, // must fix, what if im not in landing page?
+  { name: 'Pricing', href: '/pricing' },
+]
 
-export function Header() {
-	const scrolled = useScroll(10);
+export const Header = () => {
+  const [menuState, setMenuState] = React.useState(false)
+  const [scrolled, setScrolled] = React.useState(false)
 
-	return (
-		<header
-			className={cn(
-				"sticky top-0 z-50 mx-auto w-full max-w-4xl border-transparent border-b md:rounded-md md:border md:transition-all md:ease-out",
-				{
-					"border-border bg-background/95 backdrop-blur-sm supports-backdrop-filter:bg-background/50 md:top-2 md:max-w-3xl md:shadow":
-						scrolled,
-				}
-			)}
-		>
-			<nav
-				className={cn(
-					"flex h-14 w-full items-center justify-between px-4 md:h-12 md:transition-all md:ease-out",
-					{
-						"md:px-2": scrolled,
-					}
-				)}
-			>
-				<a
-					className="rounded-md p-2 hover:bg-muted dark:hover:bg-muted/50"
-					href="/"
-				>
-					<Logo />
-				</a>
-				<div className="hidden items-center gap-2 md:flex">
-					<div>
-						{navLinks.map((link) => (
-							<Button key={link.label} size="sm" variant="ghost" render={<a href={link.href} />} nativeButton={false}>{link.label}</Button>
-						))}
-					</div>
-					<Button size="sm" variant="outline">
-						Sign In
-					</Button>
-					<Button size="sm">Get Started</Button>
-				</div>
-				<MobileNav />
-			</nav>
-		</header>
-	);
+  const { scrollYProgress } = useScroll()
+
+  React.useEffect(() => {
+    const unsubscribe = scrollYProgress.on('change', (latest) => {
+      setScrolled(latest > 0.05)
+    })
+    return () => unsubscribe()
+  }, [scrollYProgress])
+
+  return (
+    <header>
+      <nav
+        data-state={menuState && 'active'}
+        className={cn(
+          'fixed z-20 w-full border-b transition-colors duration-150',
+          scrolled && 'bg-background/50 backdrop-blur-3xl'
+        )}
+      >
+        <div className="mx-auto max-w-5xl px-6 transition-all duration-300">
+          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
+              <Link href="/" aria-label="home" className="flex items-center space-x-2">
+                <Logo />
+              </Link>
+
+              <button
+                onClick={() => setMenuState(!menuState)}
+                aria-label={menuState == true ? 'Close Menu' : 'Open Menu'}
+                className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
+              >
+                <Menu className="m-auto size-6 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
+                <X className="absolute inset-0 m-auto size-6 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
+              </button>
+
+              <div className="hidden lg:block">
+                <ul className="flex gap-8 text-sm">
+                  {menuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link
+                        href={item.href}
+                        className="block text-muted-foreground duration-150 hover:text-accent-foreground"
+                      >
+                        <span>{item.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border bg-background p-6 shadow-2xl shadow-zinc-300/20 in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:in-data-[state=active]:flex dark:shadow-none dark:lg:bg-transparent">
+              <div className="lg:hidden">
+                <ul className="space-y-6 text-base">
+                  {menuItems.map((item, index) => (
+                    <li key={index}>
+                      <Link
+                        href={item.href}
+                        className="block text-muted-foreground duration-150 hover:text-accent-foreground"
+                      >
+                        <span>{item.name}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
+                <Button variant="outline" size="sm" render={<Link href="#" />} nativeButton={false}>
+                  <span>Login</span>
+                </Button>
+                <Button size="sm" render={<Link href="#" />} nativeButton={false}>
+                  <span>Sign Up</span>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+  )
 }
