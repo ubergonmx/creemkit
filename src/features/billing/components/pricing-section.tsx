@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Check } from 'lucide-react'
+import { IconCheck } from '@tabler/icons-react'
 
 export function PricingSection() {
   return (
@@ -36,7 +36,7 @@ export function PricingSection() {
                 {['Basic Analytics Dashboard', '5GB Cloud Storage', 'Email and Chat Support'].map(
                   (item, index) => (
                     <li key={index} className="flex items-center gap-2">
-                      <Check className="size-3" />
+                      <IconCheck size={12} />
                       {item}
                     </li>
                   )
@@ -57,44 +57,44 @@ export function PricingSection() {
           </Card>
 
           <Card className="relative flex flex-col overflow-visible bg-muted">
-            <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+            <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-gradient-to-br from-amber-300 via-yellow-400 to-amber-500 px-3 py-1 text-xs font-semibold text-amber-950 shadow-sm">
               Popular
             </span>
             <div className="flex flex-col">
-                <CardHeader>
-                  <CardTitle className="font-medium">Pro</CardTitle>
-                  <span className="my-3 block text-2xl font-semibold">$19 / mo</span>
-                  <CardDescription className="text-sm">Per editor</CardDescription>
-                </CardHeader>
+              <CardHeader>
+                <CardTitle className="font-medium">Pro</CardTitle>
+                <span className="my-3 block text-2xl font-semibold">$19 / mo</span>
+                <CardDescription className="text-sm">Per editor</CardDescription>
+              </CardHeader>
 
-                <CardContent className="space-y-4">
-                  <hr className="border-dashed" />
-                  <ul className="list-outside space-y-3 text-sm">
-                    {[
-                      'Everything in Free Plan',
-                      '5GB Cloud Storage',
-                      'Email and Chat Support',
-                      'Access to Community Forum',
-                      'Single User Access',
-                      'Access to Basic Templates',
-                      'Mobile App Access',
-                      '1 Custom Report Per Month',
-                      'Monthly Product Updates',
-                      'Standard Security Features',
-                    ].map((item, index) => (
-                      <li key={index} className="flex items-center gap-2">
-                        <Check className="size-3" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
+              <CardContent className="space-y-4">
+                <hr className="border-dashed" />
+                <ul className="list-outside space-y-3 text-sm">
+                  {[
+                    'Everything in Free Plan',
+                    '5GB Cloud Storage',
+                    'Email and Chat Support',
+                    'Access to Community Forum',
+                    'Single User Access',
+                    'Access to Basic Templates',
+                    'Mobile App Access',
+                    '1 Custom Report Per Month',
+                    'Monthly Product Updates',
+                    'Standard Security Features',
+                  ].map((item, index) => (
+                    <li key={index} className="flex items-center gap-2">
+                      <IconCheck size={12} />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
 
-                <CardFooter>
-                  <Button className="w-full" render={<Link href="" />} nativeButton={false}>
-                    Get Started
-                  </Button>
-                </CardFooter>
+              <CardFooter>
+                <Button className="w-full" render={<Link href="" />} nativeButton={false}>
+                  Get Started
+                </Button>
+              </CardFooter>
             </div>
           </Card>
 
@@ -112,7 +112,7 @@ export function PricingSection() {
                 {['Everything in Pro Plan', '5GB Cloud Storage', 'Email and Chat Support'].map(
                   (item, index) => (
                     <li key={index} className="flex items-center gap-2">
-                      <Check className="size-3" />
+                      <IconCheck size={12} />
                       {item}
                     </li>
                   )

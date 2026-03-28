@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
+import { IconChevronRight } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
@@ -47,7 +47,7 @@ export default function HeroSection() {
                   as="h1"
                   className="mt-8 max-w-2xl text-5xl font-medium text-balance md:text-6xl lg:mt-16"
                 >
-                  Build and Ship 10x faster with NS
+                  Ship Your SaaS in Days, Not Months
                 </TextEffect>
                 <TextEffect
                   per="line"
@@ -57,8 +57,8 @@ export default function HeroSection() {
                   as="p"
                   className="mt-8 max-w-2xl text-lg text-pretty"
                 >
-                  Tailwindcss highly customizable components for building modern websites and
-                  applications that look and feel the way you mean it.
+                  A production-ready Next.js starter with Supabase auth, Creem payments, and a
+                  credits system — pre-wired so you can focus on building your product.
                 </TextEffect>
 
                 <AnimatedGroup
@@ -82,7 +82,9 @@ export default function HeroSection() {
                     <Button
                       size="lg"
                       className="rounded-xl px-5 text-base"
-                      render={<Link href="#link" />}
+                      render={
+                        <Link href="https://github.com/ubergonmx/nextjs-supabase-creem-starter" />
+                      }
                       nativeButton={false}
                     >
                       <span className="text-nowrap">Start Building</span>
@@ -93,10 +95,10 @@ export default function HeroSection() {
                     size="lg"
                     variant="ghost"
                     className="h-10.5 rounded-xl px-5 text-base"
-                    render={<Link href="#link" />}
+                    render={<Link href="/pricing" />}
                     nativeButton={false}
                   >
-                    <span className="text-nowrap">Request a demo</span>
+                    <span className="text-nowrap">View Pricing</span>
                   </Button>
                 </AnimatedGroup>
               </div>
@@ -138,10 +140,10 @@ export default function HeroSection() {
         <section className="bg-background pt-16 pb-16 md:pb-32">
           <div className="group relative m-auto max-w-5xl px-6">
             <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-              <Link href="/" className="block text-sm duration-150 hover:opacity-75">
-                <span> Meet Our Customers</span>
+              <Link href="/#features" className="block text-sm duration-150 hover:opacity-75">
+                <span>Powered by the best</span>
 
-                <ChevronRight className="ml-1 inline-block size-3" />
+                <IconChevronRight className="ml-1 inline-block size-3" />
               </Link>
             </div>
             <div className="mx-auto mt-12 grid max-w-2xl grid-cols-3 gap-x-12 gap-y-8 transition-all duration-500 **:fill-foreground group-hover:opacity-50 group-hover:blur-xs sm:gap-x-16 sm:gap-y-14 md:grid-cols-4">
