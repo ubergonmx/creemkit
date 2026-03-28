@@ -56,12 +56,11 @@ export function PricingSection() {
             </CardFooter>
           </Card>
 
-          <div className="relative pt-3">
-            <span className="absolute inset-x-0 top-0 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+          <Card className="relative flex flex-col overflow-visible bg-muted">
+            <span className="absolute inset-x-0 -top-3 mx-auto flex h-6 w-fit items-center rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
               Popular
             </span>
-            <Card className="flex flex-col overflow-visible bg-muted">
-              <div className="flex flex-col">
+            <div className="flex flex-col">
                 <CardHeader>
                   <CardTitle className="font-medium">Pro</CardTitle>
                   <span className="my-3 block text-2xl font-semibold">$19 / mo</span>
@@ -96,9 +95,8 @@ export function PricingSection() {
                     Get Started
                   </Button>
                 </CardFooter>
-              </div>
-            </Card>
-          </div>
+            </div>
+          </Card>
 
           <Card className="flex flex-col bg-muted">
             <CardHeader>
