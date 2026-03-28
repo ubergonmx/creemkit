@@ -8,11 +8,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "format": "prettier --write \"**/*.{ts,tsx}\"",
+    "format": "oxfmt",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@base-ui/react": "^1.3.0",
+    "@oyerinde/caliper": "^0.2.3",
     "@tabler/icons-react": "^3.41.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -35,8 +36,6 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.1",
     "postcss": "^8",
-    "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4.2.1",
     "typescript": "^5.9.3"
   },
