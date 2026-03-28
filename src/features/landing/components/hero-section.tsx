@@ -4,10 +4,7 @@ import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
-import { SupabaseFull } from './svgs/supabase'
-import { VercelFull } from './svgs/vercel'
-import { NextjsFull } from './svgs/nextjs'
-import { CreemFull } from './svgs/creem'
+import { LogoStrip } from './logo-strip'
 
 const transitionVariants = {
   item: {
@@ -150,19 +147,8 @@ export default function HeroSection() {
                 <IconChevronRight className="ml-1 inline-block size-3" />
               </Link>
             </div>
-            <div className="mx-auto mt-12 grid max-w-2xl grid-cols-2 gap-x-12 gap-y-8 transition-all duration-500 **:fill-foreground group-hover:opacity-50 group-hover:blur-xs sm:gap-x-16 sm:gap-y-14 md:grid-cols-4">
-              <div className="flex items-center">
-                <NextjsFull className="mx-auto h-6 w-full" />
-              </div>
-              <div className="flex items-center">
-                <VercelFull className="mx-auto h-4 w-full" />
-              </div>
-              <div className="flex items-center">
-                <SupabaseFull className="mx-auto h-5 w-full" />
-              </div>
-              <div className="flex items-center">
-                <CreemFull className="mx-auto h-5 w-full" />
-              </div>
+            <div className="mx-auto mt-12">
+              <LogoStrip />
             </div>
           </div>
         </section>

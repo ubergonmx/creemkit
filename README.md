@@ -47,15 +47,15 @@ cp .env.example .env.local
 
 Fill in `.env.local` with your credentials:
 
-| Variable | Where to find it |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Project Settings → API |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Project Settings → API |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Project Settings → API |
-| `CREEM_API_KEY` | Creem → Developer → API Keys |
-| `CREEM_WEBHOOK_SECRET` | Creem → Developer → Webhooks |
-| `NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO` | Creem → Products |
-| `NEXT_PUBLIC_CREEM_PRODUCT_ID_CREDITS` | Creem → Products |
+| Variable                               | Where to find it                  |
+| -------------------------------------- | --------------------------------- |
+| `NEXT_PUBLIC_SUPABASE_URL`             | Supabase → Project Settings → API |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY`        | Supabase → Project Settings → API |
+| `SUPABASE_SERVICE_ROLE_KEY`            | Supabase → Project Settings → API |
+| `CREEM_API_KEY`                        | Creem → Developer → API Keys      |
+| `CREEM_WEBHOOK_SECRET`                 | Creem → Developer → Webhooks      |
+| `NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO`     | Creem → Products                  |
+| `NEXT_PUBLIC_CREEM_PRODUCT_ID_CREDITS` | Creem → Products                  |
 
 ### 3. Set up the database
 

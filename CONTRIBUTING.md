@@ -14,13 +14,13 @@ Thanks for your interest in contributing! Here's how to get started.
 
 Use the following prefixes when creating branches:
 
-| Prefix | Use for |
-|--------|---------|
-| `feat/` | New features |
-| `fix/` | Bug fixes |
+| Prefix   | Use for                   |
+| -------- | ------------------------- |
+| `feat/`  | New features              |
+| `fix/`   | Bug fixes                 |
 | `chore/` | Maintenance, config, deps |
-| `docs/` | Documentation only |
-| `ci/` | CI/CD changes |
+| `docs/`  | Documentation only        |
+| `ci/`    | CI/CD changes             |
 
 Example: `feat/credits-wallet`, `fix/webhook-signature`
 

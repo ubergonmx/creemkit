@@ -156,7 +156,7 @@ export function FooterSection() {
             <Link href="/" aria-label="go home">
               <Logo />
             </Link>
-            <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               A production-ready Next.js starter — ship your SaaS in days, not months.
             </p>
           </div>

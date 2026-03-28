@@ -120,19 +120,19 @@ supabase/
 
 ## Principles
 
-| Rule | How it's applied |
-|---|---|
-| `app/` = routing only | Pages import and render feature components — no business logic in route files |
-| Features are self-contained | `billing/` has its own components, actions, hooks, types, and webhooks |
-| `lib/` = zero business logic | Only infrastructure clients (Supabase, Creem SDK) |
-| `components/ui/` = shadcn only | No feature logic leaks into shared UI primitives |
-| Webhooks co-located with billing | `features/billing/webhooks/` not `app/api/webhooks/` |
+| Rule                             | How it's applied                                                              |
+| -------------------------------- | ----------------------------------------------------------------------------- |
+| `app/` = routing only            | Pages import and render feature components — no business logic in route files |
+| Features are self-contained      | `billing/` has its own components, actions, hooks, types, and webhooks        |
+| `lib/` = zero business logic     | Only infrastructure clients (Supabase, Creem SDK)                             |
+| `components/ui/` = shadcn only   | No feature logic leaks into shared UI primitives                              |
+| Webhooks co-located with billing | `features/billing/webhooks/` not `app/api/webhooks/`                          |
 
 ## Why Feature-Based?
 
-| | Layer-Based | Feature-Based |
-|---|---|---|
+|                       | Layer-Based                               | Feature-Based                   |
+| --------------------- | ----------------------------------------- | ------------------------------- |
 | Find all billing code | Hunt across `api/`, `components/`, `lib/` | One folder: `features/billing/` |
-| Add a new feature | Touch 3+ directories | Add one `features/X/` folder |
-| Delete a feature | Risky — scattered files | Delete one folder |
-| Onboarding a new dev | High cognitive load | Self-documenting |
+| Add a new feature     | Touch 3+ directories                      | Add one `features/X/` folder    |
+| Delete a feature      | Risky — scattered files                   | Delete one folder               |
+| Onboarding a new dev  | High cognitive load                       | Self-documenting                |

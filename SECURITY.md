@@ -3,7 +3,7 @@
 ## Supported Versions
 
 | Version | Supported |
-|---------|-----------|
+| ------- | --------- |
 | latest  | ✅        |
 
 This is a boilerplate/starter template. Only the latest version on `main` receives security updates.
