@@ -50,9 +50,7 @@ export function FaqsSection() {
                     </div>
 
                     <div className="md:col-span-3">
-                        <Accordion
-                            type="single"
-                            collapsible>
+                        <Accordion>
                             {faqItems.map((item) => (
                                 <AccordionItem
                                     key={item.id}

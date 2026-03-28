@@ -11,7 +11,7 @@ export function FeaturesSection() {
                     </div>
                     <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                         <Card
-                            variant="soft"
+                            data-soft
                             className="overflow-hidden p-6">
                             <KeyRound className="text-primary size-5" />
                             <h3 className="text-foreground mt-5 text-lg font-semibold">Supabase Auth</h3>
@@ -19,7 +19,7 @@ export function FeaturesSection() {
                         </Card>
 
                         <Card
-                            variant="soft"
+                            data-soft
                             className="group overflow-hidden px-6 pt-6">
                             <CreditCard className="text-primary size-5" />
                             <h3 className="text-foreground mt-5 text-lg font-semibold">Creem Payments</h3>
@@ -27,7 +27,7 @@ export function FeaturesSection() {
                         </Card>
 
                         <Card
-                            variant="soft"
+                            data-soft
                             className="group overflow-hidden px-6 pt-6">
                             <Database className="text-primary size-5" />
                             <h3 className="text-foreground mt-5 text-lg font-semibold">Credits System</h3>
@@ -35,7 +35,7 @@ export function FeaturesSection() {
                         </Card>
 
                         <Card
-                            variant="soft"
+                            data-soft
                             className="overflow-hidden p-6 md:col-span-2 lg:col-span-1">
                             <Layout className="text-primary size-5" />
                             <h3 className="text-foreground mt-5 text-lg font-semibold">Feature-Based Architecture</h3>
