@@ -52,7 +52,7 @@ export function FaqsSection() {
               Your questions answered
             </p>
             <p className="mt-6 hidden text-muted-foreground md:block">
-              Can't find what you're looking for? Contact our{' '}
+              Can&apos;t find what you&apos;re looking for? Contact our{' '}
               <Link href="#" className="font-medium text-primary hover:underline">
                 customer support team
               </Link>
@@ -75,7 +75,7 @@ export function FaqsSection() {
           </div>
 
           <p className="mt-6 text-muted-foreground md:hidden">
-            Can't find what you're looking for? Contact our{' '}
+            Can&apos;t find what you&apos;re looking for? Contact our{' '}
             <Link href="#" className="font-medium text-primary hover:underline">
               customer support team
             </Link>
