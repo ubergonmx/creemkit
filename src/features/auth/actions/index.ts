@@ -1,28 +1,38 @@
 "use server";
 
-import * as z from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import type { AuthActionState, OAuthProvider } from "../types";
+import { loginSchema, signupSchema } from "../schema";
 
-// -- Schemas --
-const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
+function getAuthRedirectBaseUrl(headersList: Headers): string {
+  const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+  if (configuredAppUrl) {
+    return configuredAppUrl.replace(/\/+$/, "");
+  }
 
-const signupSchema = z
-  .object({
-    fullName: z.string().min(1, "Name is required"),
-    email: z.string().email("Invalid email address"),
-    password: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
-  });
+  const forwardedHost = headersList
+    .get("x-forwarded-host")
+    ?.split(",")[0]
+    ?.trim();
+  const forwardedProto = headersList
+    .get("x-forwarded-proto")
+    ?.split(",")[0]
+    ?.trim();
+  const host = forwardedHost ?? headersList.get("host");
+
+  if (host) {
+    const proto =
+      forwardedProto ??
+      (host.startsWith("localhost") || host.startsWith("127.0.0.1")
+        ? "http"
+        : "https");
+    return `${proto}://${host}`;
+  }
+
+  return "http://localhost:3000";
+}
 
 // -- Actions --
 
@@ -70,7 +80,7 @@ export async function signup(
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: result.data.email,
     password: result.data.password,
     options: {
@@ -82,18 +92,24 @@ export async function signup(
     return { error: error.message };
   }
 
+  if (!data.session) {
+    return {
+      message: "Check your email to confirm your account, then sign in.",
+    };
+  }
+
   redirect("/dashboard");
 }
 
 export async function loginWithOAuth(provider: OAuthProvider): Promise<void> {
   const headersList = await headers();
-  const origin = headersList.get("origin") ?? "http://localhost:3000";
+  const baseUrl = getAuthRedirectBaseUrl(headersList);
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
     options: {
-      redirectTo: `${origin}/auth/callback`,
+      redirectTo: `${baseUrl}/auth/callback`,
     },
   });
 

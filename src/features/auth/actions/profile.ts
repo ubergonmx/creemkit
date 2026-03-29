@@ -1,12 +1,8 @@
 "use server";
 
-import * as z from "zod";
 import { createClient } from "@/lib/supabase/server";
 import type { AuthActionState } from "../types";
-
-const profileSchema = z.object({
-  fullName: z.string().min(1, "Name is required"),
-});
+import { profileSchema } from "../schema";
 
 export async function updateProfile(
   _prevState: AuthActionState,
