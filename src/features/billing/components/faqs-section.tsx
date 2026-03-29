@@ -12,33 +12,33 @@ export function FaqsSection() {
   const faqItems = [
     {
       id: 'item-1',
-      question: 'How long does shipping take?',
+      question: 'What do I get with this starter?',
       answer:
-        'Standard shipping takes 3-5 business days, depending on your location. Express shipping options are available at checkout for 1-2 business day delivery.',
+        'This is demo only but you get a production-ready Next.js app with Supabase authentication, Creem payment integration, a credits system, and a fully styled landing page - all pre-wired so you can start building your SaaS immediately.',
     },
     {
       id: 'item-2',
-      question: 'What payment methods do you accept?',
+      question: 'How does the credits system work?',
       answer:
-        'We accept all major credit cards (Visa, Mastercard, American Express), PayPal, Apple Pay, and Google Pay. For enterprise customers, we also offer invoicing options.',
+        'Credits and billing here are example logic. In the template, credits are tracked in Supabase and can be consumed per action; you can customize the rules and pricing.',
     },
     {
       id: 'item-3',
-      question: 'Can I change or cancel my order?',
+      question: 'Can I switch plans later?',
       answer:
-        'You can modify or cancel your order within 1 hour of placing it. After this window, please contact our customer support team who will assist you with any changes.',
+        'Yes in this demo, but this is placeholder policy. Update plan names, billing-cycle behavior, and rollover rules to match your product.',
     },
     {
       id: 'item-4',
-      question: 'Do you ship internationally?',
+      question: 'Is there a free trial for paid plans?',
       answer:
-        "Yes, we ship to over 50 countries worldwide. International shipping typically takes 7-14 business days. Additional customs fees may apply depending on your country's import regulations.",
+        'The free-tier/trial message here is sample content, not a live pricing offer. Replace it with your real trial and pricing terms.',
     },
     {
       id: 'item-5',
-      question: 'What is your return policy?',
+      question: 'How do I deploy this to production?',
       answer:
-        'We offer a 30-day return policy for most items. Products must be in original condition with tags attached. Some specialty items may have different return terms, which will be noted on the product page.',
+        'Click the "Deploy with Vercel" button in the README, set your environment variables (Supabase and Creem keys), and you\'re live. The entire process takes under 5 minutes.',
     },
   ]
 

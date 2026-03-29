@@ -26,21 +26,23 @@ export function PricingSection() {
             <CardHeader>
               <CardTitle className="font-medium">Free</CardTitle>
               <span className="my-3 block text-2xl font-semibold">$0 / mo</span>
-              <CardDescription className="text-sm">Per editor</CardDescription>
+              <CardDescription className="text-sm">For side projects and testing</CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-4">
               <hr className="border-dashed" />
 
               <ul className="list-outside space-y-3 text-sm">
-                {['Basic Analytics Dashboard', '5GB Cloud Storage', 'Email and Chat Support'].map(
-                  (item, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <IconCheck size={12} />
-                      {item}
-                    </li>
-                  )
-                )}
+                {[
+                  'Supabase auth (email + OAuth)',
+                  '100 credits included',
+                  'Community support',
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    <IconCheck size={12} />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </CardContent>
 
@@ -63,23 +65,23 @@ export function PricingSection() {
             <CardHeader>
               <CardTitle className="font-medium">Pro</CardTitle>
               <span className="my-3 block text-2xl font-semibold">$19 / mo</span>
-              <CardDescription className="text-sm">Per editor</CardDescription>
+              <CardDescription className="text-sm">For growing SaaS products</CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-4">
               <hr className="border-dashed" />
               <ul className="list-outside space-y-3 text-sm">
                 {[
-                  'Everything in Free Plan',
-                  '5GB Cloud Storage',
-                  'Email and Chat Support',
-                  'Access to Community Forum',
-                  'Single User Access',
-                  'Access to Basic Templates',
-                  'Mobile App Access',
-                  '1 Custom Report Per Month',
-                  'Monthly Product Updates',
-                  'Standard Security Features',
+                  'Everything in Free',
+                  '5,000 credits / month',
+                  'Custom domain support',
+                  'Webhook event logs',
+                  'Priority email support',
+                  'Role-based access control',
+                  'Usage analytics dashboard',
+                  'API rate limit increase',
+                  'Monthly product updates',
+                  'Advanced security features',
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-2">
                     <IconCheck size={12} />
@@ -100,21 +102,23 @@ export function PricingSection() {
             <CardHeader>
               <CardTitle className="font-medium">Business</CardTitle>
               <span className="my-3 block text-2xl font-semibold">$29 / mo</span>
-              <CardDescription className="text-sm">Per editor</CardDescription>
+              <CardDescription className="text-sm">For teams and agencies</CardDescription>
             </CardHeader>
 
             <CardContent className="space-y-4">
               <hr className="border-dashed" />
 
               <ul className="list-outside space-y-3 text-sm">
-                {['Everything in Pro Plan', '5GB Cloud Storage', 'Email and Chat Support'].map(
-                  (item, index) => (
-                    <li key={index} className="flex items-center gap-2">
-                      <IconCheck size={12} />
-                      {item}
-                    </li>
-                  )
-                )}
+                {[
+                  'Everything in Pro',
+                  'Unlimited credits',
+                  'Dedicated support channel',
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-2">
+                    <IconCheck size={12} />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </CardContent>
 
