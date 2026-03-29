@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import { IconChevronRight } from '@tabler/icons-react'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
 import { TextEffect } from '@/components/ui/text-effect'
 import { AnimatedGroup } from '@/components/ui/animated-group'
-import { LogoStrip } from './logo-strip'
+import { LogoBar } from './logo-bar'
 
 const transitionVariants = {
   item: {
@@ -138,20 +137,7 @@ export default function HeroSection() {
             </AnimatedGroup>
           </div>
         </section>
-        <section className="bg-background pt-16 pb-16 md:pb-32">
-          <div className="group relative m-auto max-w-5xl px-6">
-            <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
-              <Link href="/#features" className="block text-sm duration-150 hover:opacity-75">
-                <span>Powered by the best</span>
-
-                <IconChevronRight className="ml-1 inline-block size-3" />
-              </Link>
-            </div>
-            <div className="mx-auto mt-12">
-              <LogoStrip />
-            </div>
-          </div>
-        </section>
+        <LogoBar />
       </main>
     </>
   )
