@@ -1,63 +1,70 @@
-'use client'
-import Link from 'next/link'
-import { Logo } from '@/components/logo'
-import { Menu, X } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import React from 'react'
-import { cn } from '@/lib/utils'
-import { useScroll } from 'motion/react'
+"use client";
+import Link from "next/link";
+import { Logo } from "@/components/logo";
+import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import React from "react";
+import { cn } from "@/lib/utils";
+import { useScroll } from "motion/react";
 
 const menuItems = [
-  { name: 'Features', href: '/#features' },
-  { name: 'Pricing', href: '/pricing' },
-]
+  { name: "Features", href: "/#features" },
+  { name: "Pricing", href: "/pricing" },
+];
 
-export const navLinks = menuItems.map((item) => ({ label: item.name, href: item.href }))
+export const navLinks = menuItems.map((item) => ({
+  label: item.name,
+  href: item.href,
+}));
 
 type HeaderProps = {
-  blurTrigger?: 'progress' | 'pixels'
-}
+  blurTrigger?: "progress" | "pixels";
+};
 
-export const Header = ({ blurTrigger = 'progress' }: HeaderProps) => {
-  const [menuState, setMenuState] = React.useState(false)
-  const [scrolled, setScrolled] = React.useState(false)
+export const Header = ({ blurTrigger = "progress" }: HeaderProps) => {
+  const [menuState, setMenuState] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
 
-  const { scrollY, scrollYProgress } = useScroll()
+  const { scrollY, scrollYProgress } = useScroll();
 
   React.useEffect(() => {
-    if (blurTrigger === 'pixels') {
-      const updateScrolled = (latest: number) => setScrolled(latest > 4)
+    if (blurTrigger === "pixels") {
+      const updateScrolled = (latest: number) => setScrolled(latest > 4);
 
-      updateScrolled(scrollY.get())
-      const unsubscribe = scrollY.on('change', updateScrolled)
-      return () => unsubscribe()
+      updateScrolled(scrollY.get());
+      const unsubscribe = scrollY.on("change", updateScrolled);
+      return () => unsubscribe();
     }
 
-    const updateScrolled = (latest: number) => setScrolled(latest > 0.05)
-    updateScrolled(scrollYProgress.get())
-    const unsubscribe = scrollYProgress.on('change', updateScrolled)
-    return () => unsubscribe()
-  }, [blurTrigger, scrollY, scrollYProgress])
+    const updateScrolled = (latest: number) => setScrolled(latest > 0.05);
+    updateScrolled(scrollYProgress.get());
+    const unsubscribe = scrollYProgress.on("change", updateScrolled);
+    return () => unsubscribe();
+  }, [blurTrigger, scrollY, scrollYProgress]);
 
   return (
     <header>
       <nav
-        data-state={menuState && 'active'}
+        data-state={menuState && "active"}
         className={cn(
-          'fixed z-20 w-full border-b transition-colors duration-150',
-          scrolled && 'bg-background/50 backdrop-blur-3xl'
+          "fixed z-20 w-full border-b transition-colors duration-150",
+          scrolled && "bg-background/50 backdrop-blur-3xl",
         )}
       >
         <div className="mx-auto max-w-5xl px-6 transition-all duration-300">
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full items-center justify-between gap-12 lg:w-auto">
-              <Link href="/" aria-label="home" className="flex items-center space-x-2">
+              <Link
+                href="/"
+                aria-label="home"
+                className="flex items-center space-x-2"
+              >
                 <Logo />
               </Link>
 
               <button
                 onClick={() => setMenuState(!menuState)}
-                aria-label={menuState == true ? 'Close Menu' : 'Open Menu'}
+                aria-label={menuState == true ? "Close Menu" : "Open Menu"}
                 className="relative z-20 -m-2.5 -mr-4 block cursor-pointer p-2.5 lg:hidden"
               >
                 <Menu className="m-auto size-6 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
@@ -96,10 +103,19 @@ export const Header = ({ blurTrigger = 'progress' }: HeaderProps) => {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button variant="outline" size="sm" render={<Link href="#" />} nativeButton={false}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  render={<Link href="/login" />}
+                  nativeButton={false}
+                >
                   <span>Login</span>
                 </Button>
-                <Button size="sm" render={<Link href="#" />} nativeButton={false}>
+                <Button
+                  size="sm"
+                  render={<Link href="/signup" />}
+                  nativeButton={false}
+                >
                   <span>Sign Up</span>
                 </Button>
               </div>
@@ -108,5 +124,5 @@ export const Header = ({ blurTrigger = 'progress' }: HeaderProps) => {
         </div>
       </nav>
     </header>
-  )
-}
+  );
+};
