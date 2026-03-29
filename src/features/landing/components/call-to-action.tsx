@@ -14,17 +14,17 @@ export function CallToAction() {
           </p>
 
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <Button size="lg" render={<Link href="#" />} nativeButton={false}>
+            <Button size="lg" render={<Link href="/login" />} nativeButton={false}>
               <span>Get Started</span>
             </Button>
 
             <Button
               size="lg"
               variant="outline"
-              render={<Link href="/pricing" />}
+              render={<Link href="https://github.com/ubergonmx/nextjs-supabase-creem-starter" />}
               nativeButton={false}
             >
-              <span>View Pricing</span>
+              <span>View on Github</span>
             </Button>
           </div>
         </div>

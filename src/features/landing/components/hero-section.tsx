@@ -80,9 +80,7 @@ export default function HeroSection() {
                     <Button
                       size="lg"
                       className="rounded-xl px-5 text-base"
-                      render={
-                        <Link href="https://github.com/ubergonmx/nextjs-supabase-creem-starter" />
-                      }
+                      render={<Link href="/login" />}
                       nativeButton={false}
                     >
                       <span className="text-nowrap">Start Building</span>
