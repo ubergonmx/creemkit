@@ -6,6 +6,7 @@ import { OXCFull } from './svg/oxc'
 import { ShadcnFull } from './svg/shadcn'
 import { NextjsFull } from './svg/nextjs'
 import { SupabaseFull } from './svg/supabase'
+import { TailwindFull } from './svg/tailwindfull'
 import { VercelFull } from './svg/vercel'
 
 export function LogoBar() {
@@ -26,6 +27,9 @@ export function LogoBar() {
               <CreemFull style={{ height: 24, width: 111, flexShrink: 0, alignSelf: 'center' }} />
               <BaseUI style={{ height: 32, width: 23, flexShrink: 0, alignSelf: 'center' }} />
               <OXCFull style={{ height: 18, width: 98, flexShrink: 0, alignSelf: 'center' }} />
+              <TailwindFull
+                style={{ height: 20, width: 159, flexShrink: 0, alignSelf: 'center' }}
+              />
               <ShadcnFull style={{ height: 24, width: 82, flexShrink: 0, alignSelf: 'center' }} />
             </InfiniteSlider>
 
