@@ -20,7 +20,7 @@ const GLODIE_AVATAR = 'https://avatars.githubusercontent.com/u/99137927?v=4'
 
 export default function FeaturesSection() {
   return (
-    <section style={{ contentVisibility: 'auto' }}>
+    <section id="features" style={{ contentVisibility: 'auto' }}>
       <div className="py-24">
         <div className="mx-auto w-full max-w-5xl px-6">
           <div>
