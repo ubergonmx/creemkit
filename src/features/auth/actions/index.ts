@@ -48,7 +48,7 @@ export async function login(
 
   const result = loginSchema.safeParse(raw);
   if (!result.success) {
-    return { fieldErrors: z.flattenError(result.error).fieldErrors, inputs: raw };
+    return { fieldErrors: z.flattenError(result.error).fieldErrors };
   }
 
   const supabase = await createClient();
@@ -58,7 +58,7 @@ export async function login(
   });
 
   if (error) {
-    return { error: "Invalid email or password", inputs: raw };
+    return { error: "Invalid email or password" };
   }
 
   redirect("/dashboard");
@@ -74,10 +74,17 @@ export async function signup(
     password: String(formData.get("password") ?? ""),
     confirmPassword: String(formData.get("confirmPassword") ?? ""),
   };
+  const signupInputs = {
+    fullName: raw.fullName,
+    email: raw.email,
+  };
 
   const result = signupSchema.safeParse(raw);
   if (!result.success) {
-    return { fieldErrors: z.flattenError(result.error).fieldErrors, inputs: raw };
+    return {
+      fieldErrors: z.flattenError(result.error).fieldErrors,
+      inputs: signupInputs,
+    };
   }
 
   const headersList = await headers();
@@ -96,7 +103,7 @@ export async function signup(
   });
 
   if (error) {
-    return { error: error.message, inputs: raw };
+    return { error: error.message, inputs: signupInputs };
   }
 
   if (!data.session) {

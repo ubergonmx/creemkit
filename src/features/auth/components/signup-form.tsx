@@ -45,6 +45,7 @@ export function SignupForm({
                   name="fullName"
                   type="text"
                   placeholder="John Doe"
+                  defaultValue={state?.inputs?.fullName}
                   required
                 />
                 {state?.fieldErrors?.fullName && (
@@ -60,6 +61,7 @@ export function SignupForm({
                   name="email"
                   type="email"
                   placeholder="m@example.com"
+                  defaultValue={state?.inputs?.email}
                   required
                 />
                 {state?.fieldErrors?.email && (
