@@ -1,6 +1,17 @@
 import createMDX from '@next/mdx'
 import type { NextConfig } from 'next'
 
+const securityHeaders = [
+  // Prevents MIME-type sniffing (CVE-2006-3396)
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  // Blocks the page from being embedded in iframes (clickjacking)
+  { key: 'X-Frame-Options', value: 'DENY' },
+  // Controls how much referrer info is sent with requests
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  // Restricts access to browser features not used by the app
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+]
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
@@ -15,6 +26,14 @@ const nextConfig: NextConfig = {
     // 'random-id.ngrok-free.dev',
     'reasoningly-ecesic-saylor.ngrok-free.dev',
   ],
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: securityHeaders,
+      },
+    ]
+  },
 }
 
 const withMDX = createMDX({
