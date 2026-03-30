@@ -59,6 +59,7 @@ export default function RootLayout({
       lang="en"
       suppressHydrationWarning
       className={cn('antialiased', inter.variable, 'font-sans')}
+      data-scroll-behavior="smooth"
     >
       <body>
         {process.env.NODE_ENV === 'development' && (

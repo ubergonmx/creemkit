@@ -1,11 +1,12 @@
-"use client";
+'use client'
 
-import * as React from "react";
-import Link from "next/link";
+import * as React from 'react'
+import Link from 'next/link'
 
-import { NavMain } from "@/features/dashboard/components/nav-main";
-import { NavSecondary } from "@/features/dashboard/components/nav-secondary";
-import { NavUser } from "@/features/dashboard/components/nav-user";
+import { NavMain } from '@/features/dashboard/components/nav-main'
+import { NavFeatures } from './nav-features'
+import { NavSecondary } from '@/features/dashboard/components/nav-secondary'
+import { NavUser } from '@/features/dashboard/components/nav-user'
 import {
   Sidebar,
   SidebarContent,
@@ -14,54 +15,67 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar";
+} from '@/components/ui/sidebar'
 import {
   IconDashboard,
   IconSettings,
   IconHelp,
   IconCreditCard,
   IconCoins,
-  IconInnerShadowTop,
-} from "@tabler/icons-react";
+} from '@tabler/icons-react'
+import { Logo } from '@/components/logo'
 
 const navMain = [
   {
-    title: "Dashboard",
-    url: "/dashboard",
+    title: 'Dashboard',
+    url: '/dashboard',
     icon: <IconDashboard />,
   },
   {
-    title: "Billing",
-    url: "/dashboard/billing",
+    title: 'Billing',
+    url: '/dashboard/billing',
     icon: <IconCreditCard />,
   },
   {
-    title: "Credits",
-    url: "/dashboard/credits",
+    title: 'Credits',
+    url: '/dashboard/credits',
     icon: <IconCoins />,
   },
   {
-    title: "Settings",
-    url: "/dashboard/settings",
+    title: 'Settings',
+    url: '/dashboard/settings',
     icon: <IconSettings />,
   },
-];
+]
 
 const navSecondary = [
   {
-    title: "Get Help",
-    url: "#",
+    title: 'Get Help',
+    url: '#',
     icon: <IconHelp />,
   },
-];
+]
+
+const navFeatures = [
+  {
+    name: 'Feature 1',
+    url: '#',
+    icon: <IconDashboard />,
+  },
+  {
+    name: 'Feature 2',
+    url: '#',
+    icon: <IconSettings />,
+  },
+]
 
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   user: {
-    name: string;
-    email: string;
-    avatar: string;
-  };
-};
+    name: string
+    email: string
+    avatar: string
+  }
+}
 
 export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
@@ -71,25 +85,21 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
           <SidebarMenuItem>
             <SidebarMenuButton
               className="data-[slot=sidebar-menu-button]:p-1.5!"
-              render={
-                <Link href="/dashboard">
-                  <span className="sr-only">Dashboard</span>
-                </Link>
-              }
+              render={<Link href="/dashboard" />}
             >
-              <IconInnerShadowTop className="size-5!" />
-              <span className="text-base font-semibold">CreemKit</span>
+              <Logo className="[&>svg]:h-auto [&>svg]:w-28" />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
+        <NavFeatures items={navFeatures} />
         <NavSecondary items={navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={user} />
       </SidebarFooter>
     </Sidebar>
-  );
+  )
 }
