@@ -1,10 +1,14 @@
 import { Webhook } from "@creem_io/nextjs";
 import { webhookHandlers } from "@/features/billing/webhooks";
 
-const rawSecret = process.env.CREEM_WEBHOOK_SECRET ?? "";
-const webhookSecret = rawSecret.startsWith("whsec_") ? rawSecret.slice(6) : rawSecret;
+export async function POST(request: Request) {
+  const webhookSecret = process.env.CREEM_WEBHOOK_SECRET ?? "";
 
-export const POST = Webhook({
-  webhookSecret,
-  ...webhookHandlers,
-});
+  const cloned = new Request(request.url, {
+    method: request.method,
+    headers: request.headers,
+    body: await request.text(),
+  });
+
+  return Webhook({ webhookSecret, ...webhookHandlers })(cloned);
+}
