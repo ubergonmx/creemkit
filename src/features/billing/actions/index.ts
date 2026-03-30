@@ -1,6 +1,6 @@
-"use server";
+'use server';
 
-import { createClient } from "@/lib/supabase/server";
+import { createClient } from '@/lib/supabase/server';
 import {
   createCheckout,
   getCustomerPortalLink,
@@ -8,13 +8,12 @@ import {
   resumeSubscription,
   upgradeSubscription,
   pauseSubscription,
-} from "@/lib/creem/client";
-import { redirect } from "next/navigation";
-import type { Subscription } from "../types";
-import { createCheckoutSchema } from "../schema";
+} from '@/lib/creem/client';
+import { redirect } from 'next/navigation';
+import { PLANS, type Subscription } from '../types';
+import { createCheckoutSchema } from '../schema';
 
-const APP_URL =
-  process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000';
 
 // ---------- Helpers ----------
 function mapRow(row: Record<string, unknown>): Subscription {
@@ -24,7 +23,7 @@ function mapRow(row: Record<string, unknown>): Subscription {
     creemSubscriptionId: (row.creem_subscription_id as string) ?? null,
     creemCustomerId: (row.creem_customer_id as string) ?? null,
     planId: (row.plan_id as string) ?? null,
-    status: row.status as Subscription["status"],
+    status: row.status as Subscription['status'],
     currentPeriodStart: (row.current_period_start as string) ?? null,
     currentPeriodEnd: (row.current_period_end as string) ?? null,
     cancelAtPeriodEnd: (row.cancel_at_period_end as boolean) ?? false,
@@ -32,11 +31,21 @@ function mapRow(row: Record<string, unknown>): Subscription {
 }
 
 // ---------- Checkout ----------
-export async function createCheckoutSession(
-  productId: string,
-): Promise<void> {
-  if (!createCheckoutSchema.safeParse({ productId }).success) {
-    redirect("/pricing?error=product_not_configured");
+export async function createCheckoutSession(productId: string): Promise<void> {
+  const normalizedProductId = productId.trim();
+
+  if (!createCheckoutSchema.safeParse({ productId: normalizedProductId }).success) {
+    redirect('/pricing?error=product_not_configured');
+  }
+
+  const allowedProductIds = new Set(
+    [PLANS.pro.productId, PLANS.business.productId].filter(
+      (id): id is string => typeof id === 'string' && id.length > 0,
+    ),
+  );
+
+  if (!allowedProductIds.has(normalizedProductId)) {
+    redirect('/pricing?error=product_not_configured');
   }
 
   const supabase = await createClient();
@@ -44,20 +53,26 @@ export async function createCheckoutSession(
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) redirect('/login');
+
+  const customerEmail = user.email?.trim();
+  if (!customerEmail) {
+    redirect('/pricing?error=missing_email');
+  }
 
   let checkoutUrl: string;
   try {
     const result = await createCheckout({
-      productId,
+      productId: normalizedProductId,
       successUrl: `${APP_URL}/dashboard?checkout=success`,
-      customerEmail: user.email!,
+      customerEmail,
       metadata: { user_id: user.id },
     });
     checkoutUrl = result.checkout_url;
   } catch (e) {
-    const message = e instanceof Error ? e.message : "Checkout unavailable";
-    redirect(`/pricing?error=${encodeURIComponent(message)}`);
+    const message = e instanceof Error ? e.message : 'Checkout unavailable';
+    console.error('createCheckoutSession failed: ', message);
+    redirect('/pricing?error=checkout_unavailable');
   }
 
   redirect(checkoutUrl);
@@ -73,10 +88,10 @@ export async function getUserSubscription(): Promise<Subscription | null> {
   if (!user) return null;
 
   const { data } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false })
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
     .limit(1)
     .single();
 
@@ -91,16 +106,16 @@ export async function openCustomerPortal(): Promise<void> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) redirect('/login');
 
   const { data: profile } = await supabase
-    .from("profiles")
-    .select("creem_customer_id")
-    .eq("id", user.id)
+    .from('profiles')
+    .select('creem_customer_id')
+    .eq('id', user.id)
     .single();
 
   if (!profile?.creem_customer_id) {
-    redirect("/dashboard/billing?error=no_customer");
+    redirect('/dashboard/billing?error=no_customer');
   }
 
   let portalUrl: string;
@@ -108,7 +123,7 @@ export async function openCustomerPortal(): Promise<void> {
     const result = await getCustomerPortalLink(profile.creem_customer_id);
     portalUrl = result.customer_portal_link;
   } catch (e) {
-    const message = e instanceof Error ? e.message : "Portal unavailable";
+    const message = e instanceof Error ? e.message : 'Portal unavailable';
     redirect(`/dashboard/billing?error=${encodeURIComponent(message)}`);
   }
 
@@ -117,38 +132,38 @@ export async function openCustomerPortal(): Promise<void> {
 
 // ---------- Cancel ----------
 export async function cancelUserSubscription(
-  mode: "scheduled" | "immediate",
+  mode: 'scheduled' | 'immediate',
 ): Promise<{ error?: string }> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Not authenticated" };
+  if (!user) return { error: 'Not authenticated' };
 
   const { data: sub } = await supabase
-    .from("subscriptions")
-    .select("creem_subscription_id")
-    .eq("user_id", user.id)
-    .not("status", "eq", "canceled")
-    .order("created_at", { ascending: false })
+    .from('subscriptions')
+    .select('creem_subscription_id')
+    .eq('user_id', user.id)
+    .not('status', 'eq', 'canceled')
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  if (!sub?.creem_subscription_id) return { error: "No active subscription" };
+  if (!sub?.creem_subscription_id) return { error: 'No active subscription' };
 
   try {
     await cancelSubscription(sub.creem_subscription_id, mode);
-    if (mode === "scheduled") {
+    if (mode === 'scheduled') {
       await supabase
-        .from("subscriptions")
+        .from('subscriptions')
         .update({ cancel_at_period_end: true })
-        .eq("creem_subscription_id", sub.creem_subscription_id);
+        .eq('creem_subscription_id', sub.creem_subscription_id);
     } else {
       await supabase
-        .from("subscriptions")
-        .update({ status: "canceled" })
-        .eq("creem_subscription_id", sub.creem_subscription_id);
+        .from('subscriptions')
+        .update({ status: 'canceled' })
+        .eq('creem_subscription_id', sub.creem_subscription_id);
     }
     return {};
   } catch (e) {
@@ -163,25 +178,25 @@ export async function resumeUserSubscription(): Promise<{ error?: string }> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Not authenticated" };
+  if (!user) return { error: 'Not authenticated' };
 
   const { data: sub } = await supabase
-    .from("subscriptions")
-    .select("creem_subscription_id")
-    .eq("user_id", user.id)
-    .not("status", "eq", "canceled")
-    .order("created_at", { ascending: false })
+    .from('subscriptions')
+    .select('creem_subscription_id')
+    .eq('user_id', user.id)
+    .not('status', 'eq', 'canceled')
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  if (!sub?.creem_subscription_id) return { error: "No active subscription" };
+  if (!sub?.creem_subscription_id) return { error: 'No active subscription' };
 
   try {
     await resumeSubscription(sub.creem_subscription_id);
     await supabase
-      .from("subscriptions")
-      .update({ cancel_at_period_end: false, status: "active" })
-      .eq("creem_subscription_id", sub.creem_subscription_id);
+      .from('subscriptions')
+      .update({ cancel_at_period_end: false, status: 'active' })
+      .eq('creem_subscription_id', sub.creem_subscription_id);
     return {};
   } catch (e) {
     return { error: (e as Error).message };
@@ -189,39 +204,34 @@ export async function resumeUserSubscription(): Promise<{ error?: string }> {
 }
 
 // ---------- Upgrade ----------
-export async function upgradeUserSubscription(
-  newProductId: string,
-): Promise<void> {
+export async function upgradeUserSubscription(newProductId: string): Promise<void> {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) redirect('/login');
 
   const { data: sub } = await supabase
-    .from("subscriptions")
-    .select("creem_subscription_id")
-    .eq("user_id", user.id)
-    .not("status", "eq", "canceled")
-    .order("created_at", { ascending: false })
+    .from('subscriptions')
+    .select('creem_subscription_id')
+    .eq('user_id', user.id)
+    .not('status', 'eq', 'canceled')
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  if (!sub?.creem_subscription_id) redirect("/dashboard/billing");
+  if (!sub?.creem_subscription_id) redirect('/dashboard/billing');
 
   try {
     await upgradeSubscription(sub.creem_subscription_id, newProductId);
   } catch (e) {
-    const message =
-      e instanceof Error ? e.message : "Unable to upgrade subscription";
-    redirect(
-      `/dashboard/billing?error=${encodeURIComponent(message)}`,
-    );
+    const message = e instanceof Error ? e.message : 'Unable to upgrade subscription';
+    redirect(`/dashboard/billing?error=${encodeURIComponent(message)}`);
   }
 
   // Actual status change comes back via webhook
-  redirect("/dashboard/billing?upgraded=1");
+  redirect('/dashboard/billing?upgraded=1');
 }
 
 // ---------- Pause ----------
@@ -231,25 +241,25 @@ export async function pauseUserSubscription(): Promise<{ error?: string }> {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) return { error: "Not authenticated" };
+  if (!user) return { error: 'Not authenticated' };
 
   const { data: sub } = await supabase
-    .from("subscriptions")
-    .select("creem_subscription_id")
-    .eq("user_id", user.id)
-    .not("status", "eq", "canceled")
-    .order("created_at", { ascending: false })
+    .from('subscriptions')
+    .select('creem_subscription_id')
+    .eq('user_id', user.id)
+    .not('status', 'eq', 'canceled')
+    .order('created_at', { ascending: false })
     .limit(1)
     .maybeSingle();
 
-  if (!sub?.creem_subscription_id) return { error: "No active subscription" };
+  if (!sub?.creem_subscription_id) return { error: 'No active subscription' };
 
   try {
     await pauseSubscription(sub.creem_subscription_id);
     await supabase
-      .from("subscriptions")
-      .update({ status: "paused" })
-      .eq("creem_subscription_id", sub.creem_subscription_id);
+      .from('subscriptions')
+      .update({ status: 'paused' })
+      .eq('creem_subscription_id', sub.creem_subscription_id);
     return {};
   } catch (e) {
     return { error: (e as Error).message };
