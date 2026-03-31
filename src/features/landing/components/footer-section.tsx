@@ -149,7 +149,7 @@ export function FooterSection() {
         <div className="grid gap-12 md:grid-cols-[1fr_2fr]">
           {/* Brand */}
           <div className="space-y-4">
-            <Link href="/" aria-label="go home">
+            <Link href="/" aria-label="go home" transitionTypes={['same-layout']}>
               <Logo />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">

@@ -46,7 +46,7 @@ export const Header = () => {
           <div className="flex items-center justify-between py-4 lg:py-5">
             {/* Logo + Desktop nav grouped left */}
             <div className="flex items-center gap-8">
-              <Link href="/" aria-label="home" className="flex items-center">
+              <Link href="/" aria-label="home" transitionTypes={['same-layout']} className="flex items-center">
                 <Logo />
               </Link>
             </div>
@@ -58,6 +58,7 @@ export const Header = () => {
                   <li key={index}>
                     <Link
                       href={item.href}
+                      transitionTypes={item.href.includes('#') ? undefined : ['same-layout']}
                       className="block font-medium text-muted-foreground duration-150 hover:text-accent-foreground"
                     >
                       {item.name}
@@ -72,7 +73,7 @@ export const Header = () => {
               {!loading && (
                 <>
                   {user ? (
-                    <Button size="default" render={<Link href="/dashboard" transitionTypes={['cross-layout']} />} nativeButton={false}>
+                    <Button size="default" render={<Link href="/dashboard" />} nativeButton={false}>
                       <span>Dashboard</span>
                     </Button>
                   ) : (
@@ -80,12 +81,12 @@ export const Header = () => {
                       <Button
                         variant="outline"
                         size="default"
-                        render={<Link href="/login" transitionTypes={['cross-layout']} />}
+                        render={<Link href="/login" />}
                         nativeButton={false}
                       >
                         <span>Login</span>
                       </Button>
-                      <Button size="default" render={<Link href="/signup" transitionTypes={['cross-layout']} />} nativeButton={false}>
+                      <Button size="default" render={<Link href="/signup" />} nativeButton={false}>
                         <span>Sign Up</span>
                       </Button>
                     </>
@@ -144,6 +145,7 @@ export const Header = () => {
                       <Link
                         href={item.href}
                         onClick={close}
+                        transitionTypes={item.href.includes('#') ? undefined : ['same-layout']}
                         className="block rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-accent-foreground"
                       >
                         {item.name}
@@ -164,7 +166,7 @@ export const Header = () => {
                       {user ? (
                         <Button
                           className="w-full"
-                          render={<Link href="/dashboard" onClick={close} transitionTypes={['cross-layout']} />}
+                          render={<Link href="/dashboard" onClick={close} />}
                           nativeButton={false}
                         >
                           Dashboard
@@ -174,14 +176,14 @@ export const Header = () => {
                           <Button
                             variant="outline"
                             className="w-full"
-                            render={<Link href="/login" onClick={close} transitionTypes={['cross-layout']} />}
+                            render={<Link href="/login" onClick={close} />}
                             nativeButton={false}
                           >
                             Login
                           </Button>
                           <Button
                             className="w-full"
-                            render={<Link href="/signup" onClick={close} transitionTypes={['cross-layout']} />}
+                            render={<Link href="/signup" onClick={close} />}
                             nativeButton={false}
                           >
                             Sign Up

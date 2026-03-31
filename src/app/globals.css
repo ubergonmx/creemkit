@@ -134,14 +134,24 @@ body {
   scroll-behavior: smooth;
 }
 
-/* Prevent the marketing header from cross-fading during view transitions */
+/* View transitions: suppress all root animations by default (cross-layout navigations are instant) */
+::view-transition-old(root),
+::view-transition-new(root),
 ::view-transition-old(site-header),
 ::view-transition-new(site-header) {
   animation: none;
 }
 
-/* Suppress transition entirely for cross-layout navigations (e.g. marketing → dashboard/auth) */
-html:active-view-transition-type(cross-layout) ::view-transition-old(root),
-html:active-view-transition-type(cross-layout) ::view-transition-new(root) {
-  animation: none;
+/* Enable cross-fade only for same-layout (marketing ↔ marketing) navigations */
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+}
+@keyframes vt-fade-out {
+  to { opacity: 0; }
+}
+html:active-view-transition-type(same-layout) ::view-transition-old(root) {
+  animation: 200ms ease both vt-fade-out;
+}
+html:active-view-transition-type(same-layout) ::view-transition-new(root) {
+  animation: 200ms ease both vt-fade-in;
 }

@@ -78,7 +78,7 @@ export default function HeroSection() {
                     key={1}
                     size="lg"
                     className="rounded-xl px-6 text-base shadow-lg shadow-primary/20"
-                    render={<Link href="/login" transitionTypes={['cross-layout']} />}
+                    render={<Link href="/login" />}
                     nativeButton={false}
                   >
                     <span className="text-nowrap">Start Building</span>
@@ -89,7 +89,7 @@ export default function HeroSection() {
                     size="lg"
                     variant="outline"
                     className="rounded-xl px-6 text-base"
-                    render={<Link href="/pricing" />}
+                    render={<Link href="/pricing" transitionTypes={['same-layout']} />}
                     nativeButton={false}
                   >
                     <span className="text-nowrap">View Pricing</span>

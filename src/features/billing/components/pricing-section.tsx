@@ -10,12 +10,76 @@ import {
 } from '@/components/ui/card';
 import { IconCheck } from '@tabler/icons-react';
 import { CheckoutButton } from '@/features/billing/components/checkout-button';
+import { UpgradeButton } from '@/features/billing/components/upgrade-button';
+import { PLANS } from '@/features/billing/types';
 
-export function PricingSection() {
-  const starterProductId = process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_STARTER;
-  const proProductId = process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_PRO;
-  const businessProductId = process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BUSINESS;
+type Props = {
+  currentPlanId?: string | null;
+  isActiveSub?: boolean;
+};
 
+function PlanButton({
+  productId,
+  currentPlanId,
+  isActiveSub,
+  planName,
+  planPrice,
+  variant = 'default',
+}: {
+  productId: string | undefined;
+  currentPlanId: string | null | undefined;
+  isActiveSub: boolean;
+  planName: string;
+  planPrice: number;
+  variant?: 'default' | 'outline';
+}) {
+  if (!productId) {
+    return (
+      <Button
+        variant="outline"
+        className="w-full"
+        render={<Link href="/signup" />}
+        nativeButton={false}
+      >
+        Get Started
+      </Button>
+    );
+  }
+
+  if (currentPlanId === productId) {
+    return (
+      <Button variant="outline" className="w-full" disabled>
+        Current Plan
+      </Button>
+    );
+  }
+
+  if (isActiveSub) {
+    const currentPrice =
+      currentPlanId === PLANS.business.productId
+        ? PLANS.business.price
+        : currentPlanId === PLANS.pro.productId
+          ? PLANS.pro.price
+          : currentPlanId === PLANS.starter.productId
+            ? PLANS.starter.price
+            : 0;
+    const label =
+      currentPrice > planPrice ? `Downgrade to ${planName}` : `Upgrade to ${planName}`;
+    return (
+      <UpgradeButton productId={productId} variant={variant}>
+        {label}
+      </UpgradeButton>
+    );
+  }
+
+  return (
+    <CheckoutButton productId={productId} variant={variant}>
+      Get Started
+    </CheckoutButton>
+  );
+}
+
+export function PricingSection({ currentPlanId, isActiveSub = false }: Props) {
   return (
     <section className="py-16 md:py-32">
       <div className="mx-auto max-w-5xl px-6">
@@ -55,20 +119,14 @@ export function PricingSection() {
             </CardContent>
 
             <CardFooter className="mt-auto border-t-0 bg-transparent">
-              {starterProductId ? (
-                <CheckoutButton productId={starterProductId} variant="outline">
-                  Get Started
-                </CheckoutButton>
-              ) : (
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  render={<Link href="/signup" transitionTypes={['cross-layout']} />}
-                  nativeButton={false}
-                >
-                  Get Started
-                </Button>
-              )}
+              <PlanButton
+                productId={PLANS.starter.productId}
+                currentPlanId={currentPlanId}
+                isActiveSub={isActiveSub}
+                planName={PLANS.starter.name}
+                planPrice={PLANS.starter.price}
+                variant="outline"
+              />
             </CardFooter>
           </Card>
 
@@ -105,13 +163,13 @@ export function PricingSection() {
             </CardContent>
 
             <CardFooter className="mt-auto border-t-0 bg-transparent">
-              {proProductId ? (
-                <CheckoutButton productId={proProductId}>Get Started</CheckoutButton>
-              ) : (
-                <Button className="w-full" disabled>
-                  Product not configured
-                </Button>
-              )}
+              <PlanButton
+                productId={PLANS.pro.productId}
+                currentPlanId={currentPlanId}
+                isActiveSub={isActiveSub}
+                planName={PLANS.pro.name}
+                planPrice={PLANS.pro.price}
+              />
             </CardFooter>
           </Card>
 
@@ -144,15 +202,14 @@ export function PricingSection() {
             </CardContent>
 
             <CardFooter className="mt-auto border-t-0 bg-transparent">
-              {businessProductId ? (
-                <CheckoutButton productId={businessProductId} variant="outline">
-                  Get Started
-                </CheckoutButton>
-              ) : (
-                <Button variant="outline" className="w-full" disabled>
-                  Product not configured
-                </Button>
-              )}
+              <PlanButton
+                productId={PLANS.business.productId}
+                currentPlanId={currentPlanId}
+                isActiveSub={isActiveSub}
+                planName={PLANS.business.name}
+                planPrice={PLANS.business.price}
+                variant="outline"
+              />
             </CardFooter>
           </Card>
         </div>
