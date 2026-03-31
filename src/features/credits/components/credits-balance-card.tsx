@@ -32,7 +32,7 @@ export function CreditsBalanceCard({
   lastTransaction?: CreditTransaction | null;
 }) {
   return (
-    <Card className="@container/card max-w-sm">
+    <Card className="@container/card">
       <CardHeader>
         <CardDescription>Credit Balance</CardDescription>
         <CardTitle className="text-4xl font-bold tracking-tight tabular-nums @[250px]/card:text-5xl">

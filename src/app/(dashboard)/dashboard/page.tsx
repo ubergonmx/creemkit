@@ -6,7 +6,6 @@ import { SiteHeader } from '@/features/dashboard/components/site-header';
 import { SubscriptionCard } from '@/features/billing/components/subscription-card';
 import { CheckoutSuccessToast } from '@/features/billing/components/checkout-success-toast';
 import { getUserSubscription } from '@/features/billing/actions/subscription';
-import { getCreditsBalance } from '@/features/credits/actions/credits';
 
 import data from './data.json';
 
@@ -20,10 +19,9 @@ export default async function Page({
 }: {
   searchParams: Promise<{ checkout?: string }>;
 }) {
-  const [{ checkout }, subscription, creditsBalance] = await Promise.all([
+  const [{ checkout }, subscription] = await Promise.all([
     searchParams,
     getUserSubscription(),
-    getCreditsBalance(),
   ]);
 
   return (
@@ -34,7 +32,7 @@ export default async function Page({
         <div className="@container/main flex flex-1 flex-col gap-2">
           <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <div className="px-4 lg:px-6">
-              <SubscriptionCard subscription={subscription} creditsBalance={creditsBalance} />
+              <SubscriptionCard subscription={subscription} />
             </div>
             <SectionCards />
             <div className="px-4 lg:px-6">

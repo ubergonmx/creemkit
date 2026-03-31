@@ -51,7 +51,7 @@ export async function createCheckoutSession(productId: string): Promise<void> {
   try {
     const result = await createCheckout({
       productId: normalizedProductId,
-      successUrl: `${APP_URL}/dashboard?checkout=success`,
+      successUrl: `${APP_URL}/dashboard/settings/billing?checkout=success`,
       customerEmail,
       metadata: { user_id: user.id },
     });

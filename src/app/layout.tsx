@@ -5,7 +5,7 @@ import './globals.css';
 import { ThemeProvider } from '@/components/theme-provider';
 import { cn } from '@/lib/utils';
 import Script from 'next/script';
-import { Toaster } from 'sonner';
+import { SonnerToaster } from '../components/sonner-toaster';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -73,7 +73,7 @@ export default function RootLayout({
         )}
         <ThemeProvider>
           {children}
-          <Toaster position="top-center" />
+          <SonnerToaster />
         </ThemeProvider>
       </body>
     </html>

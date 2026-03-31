@@ -9,6 +9,7 @@ import { UpgradeButton } from '@/features/billing/components/upgrade-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { UrlToast } from '@/components/url-toast';
+import { CheckoutSuccessToast } from '@/features/billing/components/checkout-success-toast';
 import { PLANS, getPlanAction } from '@/features/billing/types';
 import { BILLING_ERRORS } from '@/features/billing/errors';
 import { resolveError } from '@/lib/errors';
@@ -21,9 +22,9 @@ export const metadata: Metadata = {
 export default async function BillingPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; checkout?: string }>;
 }) {
-  const [{ error }, subscription, creditsBalance, transactions] = await Promise.all([
+  const [{ error, checkout }, subscription, creditsBalance, transactions] = await Promise.all([
     searchParams,
     getUserSubscription(),
     getCreditsBalance(),
@@ -54,8 +55,17 @@ export default async function BillingPage({
 
   return (
     <div className="flex flex-col gap-6">
+      {checkout === 'success' && <CheckoutSuccessToast />}
       {errorMessage && <UrlToast message={errorMessage} />}
-      <SubscriptionCard subscription={subscription} creditsBalance={creditsBalance} />
+      {/* Top row: subscription status + credit balance side by side */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <SubscriptionCard subscription={subscription} />
+        <CreditsBalanceCard
+          balance={creditsBalance}
+          isUnlimited={isUnlimited}
+          lastTransaction={transactions[0] ?? null}
+        />
+      </div>
 
       <Card>
         <CardHeader>
@@ -155,11 +165,6 @@ export default async function BillingPage({
         </CardContent>
       </Card>
 
-      <CreditsBalanceCard
-        balance={creditsBalance}
-        isUnlimited={isUnlimited}
-        lastTransaction={transactions[0] ?? null}
-      />
       <TransactionHistory transactions={transactions} />
     </div>
   );
