@@ -12,9 +12,14 @@ const securityHeaders = [
   { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
 ];
 
+const isProd = process.env.NODE_ENV === 'production';
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  typescript: {
+    tsconfigPath: isProd ? 'tsconfig.build.json' : 'tsconfig.json',
+  },
   images: {
     remotePatterns: [
       // Add allowed image domains here, e.g.:
