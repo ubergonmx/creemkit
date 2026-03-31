@@ -18,13 +18,21 @@ export async function GET(request: NextRequest) {
   const code = searchParams.get('code');
   const nextPath = getSafeNextPath(searchParams.get('next'));
 
+  // Next.js sees requests as localhost even when tunnelled via ngrok.
+  // Use forwarded headers to redirect back to the actual origin.
+  const forwardedHost = request.headers.get('x-forwarded-host')?.split(',')[0]?.trim();
+  const forwardedProto = request.headers.get('x-forwarded-proto')?.split(',')[0]?.trim();
+  const origin = forwardedHost
+    ? `${forwardedProto ?? 'https'}://${forwardedHost}`
+    : new URL(request.url).origin;
+
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      return NextResponse.redirect(new URL(nextPath, request.url));
+      return NextResponse.redirect(new URL(nextPath, origin));
     }
   }
 
-  return NextResponse.redirect(new URL('/login?error=auth_callback_failed', request.url));
+  return NextResponse.redirect(new URL('/login?error=auth_callback_failed', origin));
 }
