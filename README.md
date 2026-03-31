@@ -22,11 +22,14 @@ Clone, configure, and start selling — no boilerplate to write.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/ubergonmx/creemkit)
 
-### Run locally
+### Run locally with template
+
+1. Click **[Use this template](https://github.com/ubergonmx/creemkit/generate)** → **Create a new repository**
+2. Clone your new repo and install:
 
 ```bash
-git clone https://github.com/ubergonmx/creemkit.git
-cd creemkit
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
 npm install
 cp .env.example .env.local
 # Fill in NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY at minimum
@@ -97,6 +100,11 @@ Open [http://localhost:3000](http://localhost:3000).
 - Atomic credit operations via Postgres RPCs (`spend_credits`, `add_credits`, `deduct_credits`)
 - Business plan users get unlimited credits — no deductions, no balance tracking
 
+**Legal**
+
+- Placeholder Terms of Service (`/terms`) and Privacy Policy (`/privacy`) as MDX pages — required by Creem before your store goes live
+- Linked from the marketing footer and auth forms out of the box; replace the placeholder content with your own before launching
+
 **Example Features (replace with your own)**
 
 - **AI Summarizer** — credit-spending feature; Business users bypass deductions entirely
@@ -141,6 +149,7 @@ The app uses a **feature-based structure** with a thin App Router layer.
 src/app/
   (marketing)/page.tsx, pricing/page.tsx
   (auth)/login/page.tsx, signup/page.tsx, auth/callback/route.ts
+  (legal)/terms/page.mdx, privacy/page.mdx
   (dashboard)/dashboard/
     page.tsx
     billing/page.tsx
@@ -155,8 +164,8 @@ src/features/
   auth/          # schemas, actions, hooks, login/signup/settings UI
   billing/       # checkout/subscription/portal actions, webhook handlers, billing UI
   credits/       # wallet actions, schema, balance/history UI
-  summarizer/    # real feature using credit spend
-  pro-showcase/  # paid-gated analytics showcase
+  summarizer/    # AI summarizer (example credit-spending feature)
+  pro-showcase/  # paid-gated analytics (example Pro+ feature)
   dashboard/     # shell/navigation components
   landing/       # marketing sections
 
@@ -235,9 +244,12 @@ npm run build
 
 ### 1. Set up the project
 
+1. Click **[Use this template](https://github.com/ubergonmx/creemkit/generate)** → **Create a new repository**
+2. Clone your new repo and install dependencies:
+
 ```bash
-git clone https://github.com/ubergonmx/creemkit.git
-cd creemkit
+git clone https://github.com/<your-username>/<your-repo>.git
+cd <your-repo>
 npm install
 cp .env.example .env.local
 ```
@@ -260,7 +272,7 @@ cp .env.example .env.local
   - `002_subscriptions.sql`
   - `003_credits.sql`
   - `004_webhook_events.sql`
-  - `005_security_hardening.sql
+  - `005_security_hardening.sql`
 - If you prefer using the Supabase CLI, run `supabase db push`
 
 4. Setting up auth providers and redirect URL:

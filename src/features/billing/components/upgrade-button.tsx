@@ -28,12 +28,14 @@ export function UpgradeButton({
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
   const router = useRouter();
+  const followUpRefreshMs = [1500, 4000] as const;
 
   function refreshAfterUpgrade() {
     // Webhook-driven credits/transactions can arrive slightly after the upgrade mutation.
     router.refresh();
-    window.setTimeout(() => router.refresh(), 1500);
-    window.setTimeout(() => router.refresh(), 4000);
+    for (const delay of followUpRefreshMs) {
+      window.setTimeout(() => router.refresh(), delay);
+    }
   }
 
   function handleConfirm() {
@@ -42,10 +44,11 @@ export function UpgradeButton({
       setOpen(false);
       if (result.error) {
         toast.error(result.error);
-      } else {
-        toast.success('Plan updated. Credits and transaction history may take a few seconds.');
-        refreshAfterUpgrade();
+        return;
       }
+
+      toast.success('Plan updated. Credits and transaction history may take a few seconds.');
+      refreshAfterUpgrade();
     });
   }
 
