@@ -32,6 +32,7 @@ export type Subscription = {
 };
 
 // ---------- Plan helpers ----------
+
 export function planNameFromId(planId: string | null): string {
   if (!planId) return 'Free';
   if (planId === process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_STARTER) return 'Starter';
@@ -62,3 +63,36 @@ export const PLANS = {
     productId: process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BUSINESS,
   },
 } as const;
+
+// ---------- Plan card actions ----------
+
+export type PlanAction = {
+  label: string;
+  disabled: boolean;
+};
+
+/**
+ * Returns the label and disabled state for a plan card button given the
+ * user&apos;s current plan. Determines upgrade vs. downgrade copy automatically.
+ */
+export function getPlanAction(
+  currentPlanId: string | null,
+  targetProductId: string,
+  targetPrice: number,
+  targetName: string,
+): PlanAction {
+  if (currentPlanId === targetProductId) {
+    return { label: 'Current Plan', disabled: true };
+  }
+  const currentPrice =
+    currentPlanId === PLANS.business.productId
+      ? PLANS.business.price
+      : currentPlanId === PLANS.pro.productId
+        ? PLANS.pro.price
+        : currentPlanId === PLANS.starter.productId
+          ? PLANS.starter.price
+          : 0;
+  const label =
+    currentPrice > targetPrice ? `Downgrade to ${targetName}` : `Upgrade to ${targetName}`;
+  return { label, disabled: false };
+}

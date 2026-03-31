@@ -96,11 +96,9 @@ export function SubscriptionCard({ subscription, creditsBalance }: Props) {
             <SubscriptionActions subscription={subscription} />
           ) : (
             <div className="flex flex-wrap gap-2">
-              {PLANS.pro.productId && (
-                <Button size="sm" render={<Link href="/pricing" />} nativeButton={false}>
-                  Upgrade to Pro
-                </Button>
-              )}
+              <Button size="sm" render={<Link href="/pricing" />} nativeButton={false}>
+                View Plans
+              </Button>
             </div>
           )}
         </CardContent>

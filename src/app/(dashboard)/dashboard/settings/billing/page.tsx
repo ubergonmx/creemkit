@@ -8,47 +8,29 @@ import { CheckoutButton } from '@/features/billing/components/checkout-button';
 import { UpgradeButton } from '@/features/billing/components/upgrade-button';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { PLANS } from '@/features/billing/types';
+import { UrlToast } from '@/components/url-toast';
+import { PLANS, getPlanAction } from '@/features/billing/types';
+import { BILLING_ERRORS } from '@/features/billing/errors';
+import { resolveError } from '@/lib/errors';
 
 export const metadata: Metadata = {
   title: 'Billing & Usage',
   description: 'Manage your subscription, billing details, and credit usage.',
 };
 
-type PlanAction = {
-  label: string;
-  disabled: boolean;
-};
-
-function getPlanAction(
-  currentPlanId: string | null,
-  targetProductId: string,
-  targetPrice: number,
-  targetName: string,
-): PlanAction {
-  if (currentPlanId === targetProductId) {
-    return { label: 'Current Plan', disabled: true };
-  }
-  const currentPrice =
-    currentPlanId === PLANS.business.productId
-      ? PLANS.business.price
-      : currentPlanId === PLANS.pro.productId
-        ? PLANS.pro.price
-        : currentPlanId === PLANS.starter.productId
-          ? PLANS.starter.price
-          : 0;
-  const label =
-    currentPrice > targetPrice ? `Downgrade to ${targetName}` : `Upgrade to ${targetName}`;
-  return { label, disabled: false };
-}
-
-export default async function BillingPage() {
-  const [subscription, creditsBalance, transactions] = await Promise.all([
+export default async function BillingPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const [{ error }, subscription, creditsBalance, transactions] = await Promise.all([
+    searchParams,
     getUserSubscription(),
     getCreditsBalance(),
     getCreditTransactions(50),
   ]);
 
+  const errorMessage = resolveError(error, BILLING_ERRORS);
   const isActiveSub =
     subscription?.status === 'active' || subscription?.status === 'trialing';
   const currentPlanId = isActiveSub ? (subscription?.planId ?? null) : null;
@@ -56,18 +38,11 @@ export default async function BillingPage() {
     isActiveSub && subscription?.planId === process.env.NEXT_PUBLIC_CREEM_PRODUCT_ID_BUSINESS;
 
   const starterPlan = PLANS.starter.productId
-    ? getPlanAction(
-        currentPlanId,
-        PLANS.starter.productId,
-        PLANS.starter.price,
-        PLANS.starter.name,
-      )
+    ? getPlanAction(currentPlanId, PLANS.starter.productId, PLANS.starter.price, PLANS.starter.name)
     : null;
-
   const proPlan = PLANS.pro.productId
     ? getPlanAction(currentPlanId, PLANS.pro.productId, PLANS.pro.price, PLANS.pro.name)
     : null;
-
   const businessPlan = PLANS.business.productId
     ? getPlanAction(
         currentPlanId,
@@ -79,6 +54,7 @@ export default async function BillingPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      {errorMessage && <UrlToast message={errorMessage} />}
       <SubscriptionCard subscription={subscription} creditsBalance={creditsBalance} />
 
       <Card>
@@ -88,7 +64,6 @@ export default async function BillingPage() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-3">
-            {/* Starter plan */}
             {PLANS.starter.productId && starterPlan && (
               <div className="flex flex-col gap-3 rounded-lg border p-4">
                 <p className="font-medium">{PLANS.starter.name}</p>
@@ -119,7 +94,6 @@ export default async function BillingPage() {
               </div>
             )}
 
-            {/* Pro plan */}
             {PLANS.pro.productId && proPlan && (
               <div className="flex flex-col gap-3 rounded-lg border p-4">
                 <p className="font-medium">{PLANS.pro.name}</p>
@@ -148,7 +122,6 @@ export default async function BillingPage() {
               </div>
             )}
 
-            {/* Business plan */}
             {PLANS.business.productId && businessPlan && (
               <div className="flex flex-col gap-3 rounded-lg border p-4">
                 <p className="font-medium">{PLANS.business.name}</p>

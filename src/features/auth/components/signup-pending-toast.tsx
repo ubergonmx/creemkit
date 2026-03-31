@@ -12,7 +12,6 @@ export function SignupPendingToast() {
     if (fired.current) return;
     fired.current = true;
     toast.success('Account created! Check your email to confirm, then sign in.', {
-      position: 'top-center',
       duration: 6000,
     });
     router.replace('/login');

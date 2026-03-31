@@ -12,7 +12,6 @@ export function CheckoutSuccessToast() {
     if (fired.current) return;
     fired.current = true;
     toast.success('Payment successful! Your plan will update shortly.', {
-      position: 'top-center',
       duration: 6000,
     });
     router.replace('/dashboard');
