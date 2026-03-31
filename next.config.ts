@@ -13,6 +13,10 @@ const securityHeaders = [
 ];
 
 const isProd = process.env.NODE_ENV === 'production';
+const allowedDevOrigins = (process.env.NEXT_ALLOWED_DEV_ORIGINS ?? '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter((origin) => origin.length > 0);
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -29,11 +33,8 @@ const nextConfig: NextConfig = {
       // { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
     ],
   },
-  allowedDevOrigins: [
-    // Add ngrok or other development origins here, e.g.:
-    // 'random-id.ngrok-free.dev',
-    'reasoningly-ecesic-saylor.ngrok-free.dev',
-  ],
+  // Configure dev-only trusted origins via NEXT_ALLOWED_DEV_ORIGINS (comma-separated).
+  allowedDevOrigins,
   async headers() {
     return [
       {

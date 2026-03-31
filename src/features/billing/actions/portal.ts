@@ -26,7 +26,8 @@ export async function openCustomerPortal(): Promise<void> {
     portalUrl = result.customer_portal_link;
   } catch (e) {
     const message = e instanceof Error ? e.message : 'Portal unavailable';
-    redirect(`/dashboard/settings/billing?error=${encodeURIComponent(message)}`);
+    console.error('openCustomerPortal failed:', message);
+    redirect('/dashboard/settings/billing?error=portal_unavailable');
   }
 
   redirect(portalUrl);

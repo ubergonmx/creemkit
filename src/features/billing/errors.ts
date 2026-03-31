@@ -2,6 +2,7 @@
 export const BILLING_ERRORS: Record<string, string> = {
   no_customer: 'No billing account found. Please contact support.',
   already_subscribed: 'You already have an active subscription.',
+  portal_unavailable: 'Billing portal is temporarily unavailable. Please try again.',
 };
 
 export const PRICING_ERRORS: Record<string, string> = {

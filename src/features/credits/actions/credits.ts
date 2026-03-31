@@ -30,7 +30,6 @@ export async function spendCredits(
 
   if (!user) return { success: false, error: 'Not authenticated' };
 
-  const supabase = await createClient();
   const admin = createAdminClient();
   const { data, error } = await admin.rpc('spend_credits', {
     p_user_id: user.id,
