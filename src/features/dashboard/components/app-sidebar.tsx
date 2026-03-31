@@ -30,9 +30,8 @@ import {
   IconDashboard,
   IconHelp,
   IconCreditCard,
-  IconCalendarWeek,
-  IconMessageCircleUser,
   IconSparkles,
+  IconChartBar,
 } from '@tabler/icons-react';
 import { Logo } from '@/components/logo';
 
@@ -51,14 +50,14 @@ const navMain = [
 
 const navFeatures = [
   {
-    name: 'Feature 1',
-    url: '#',
-    icon: <IconMessageCircleUser />,
+    name: 'AI Summarizer',
+    url: '/dashboard/feature-1',
+    icon: <IconSparkles />,
   },
   {
-    name: 'Feature 2',
-    url: '#',
-    icon: <IconCalendarWeek />,
+    name: 'Analytics',
+    url: '/dashboard/feature-2',
+    icon: <IconChartBar />,
   },
 ];
 

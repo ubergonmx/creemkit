@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { IconCoins } from '@tabler/icons-react';
 import type { CreditTransaction } from '@/features/credits/types';
+import { IconCoins } from '@tabler/icons-react';
 
 function formatRelativeDate(dateStr: string): string {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -39,13 +39,13 @@ export function CreditsBalanceCard({
           {isUnlimited ? '∞' : balance.toLocaleString()}
         </CardTitle>
         <CardAction>
-          <Badge variant="outline">
-            <IconCoins className="size-3" />
-            credits
+          <Badge variant="outline" className="font-normal">
+            <IconCoins />
+            Credits
           </Badge>
         </CardAction>
       </CardHeader>
-      <CardFooter className="flex-col items-start gap-1 text-sm">
+      <CardFooter className="mt-auto flex-col items-start gap-1 text-sm">
         {lastTransaction ? (
           <>
             <p className="font-medium">

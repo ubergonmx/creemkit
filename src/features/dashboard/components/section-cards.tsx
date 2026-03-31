@@ -63,7 +63,7 @@ export function SectionCards({
           <CardAction>
             <Badge variant="outline">
               <IconCoins />
-              credits
+              Credits
             </Badge>
           </CardAction>
         </CardHeader>
@@ -81,7 +81,9 @@ export function SectionCards({
       <Card className="@container/card">
         <CardHeader>
           <CardDescription>Current Plan</CardDescription>
-          <CardTitle className="text-2xl font-semibold @[250px]/card:text-3xl">{planName}</CardTitle>
+          <CardTitle className="text-2xl font-semibold @[250px]/card:text-3xl">
+            {planName}
+          </CardTitle>
           <CardAction>
             <Badge variant={isActive ? 'default' : 'secondary'}>
               <IconCreditCard />
@@ -133,7 +135,10 @@ export function SectionCards({
           <CardDescription>Next Renewal</CardDescription>
           <CardTitle className="text-2xl font-semibold @[250px]/card:text-3xl">
             {nextRenewal
-              ? new Date(nextRenewal).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+              ? new Date(nextRenewal).toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
+                })
               : '—'}
           </CardTitle>
           <CardAction>

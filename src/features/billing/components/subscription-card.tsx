@@ -1,6 +1,14 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { SubscriptionActions } from './subscription-actions';
 import { planNameFromId } from '@/features/billing/types';
 import type { Subscription } from '@/features/billing/types';
@@ -55,46 +63,51 @@ export function SubscriptionCard({ subscription }: Props) {
 
   return (
     <Card>
-      <CardHeader className="pb-2">
-        <div className="flex items-center justify-between">
-          <CardTitle className="text-base">Subscription</CardTitle>
+      <CardHeader>
+        <CardTitle className="text-base">Subscription</CardTitle>
+        <CardDescription>{planName} plan</CardDescription>
+        <CardAction>
           {subscription ? (
             <Badge variant={statusVariant(subscription.status)}>
               {formatStatus(subscription.status)}
             </Badge>
           ) : (
-            <Badge variant="secondary">{planName}</Badge>
+            <Badge variant="secondary">Free</Badge>
           )}
-        </div>
-        <CardDescription>{planName} plan</CardDescription>
+        </CardAction>
       </CardHeader>
-      <CardContent className="space-y-3">
-        {subscription && isActive && (
-          <div className="space-y-1 text-sm text-muted-foreground">
-            <p>
-              Current period:{' '}
-              <span className="text-foreground">
-                {formatDate(subscription.currentPeriodStart)} &rarr;{' '}
-                {formatDate(subscription.currentPeriodEnd)}
-              </span>
-            </p>
-            {subscription.cancelAtPeriodEnd && (
-              <p className="rounded-md bg-yellow-50 px-3 py-1.5 text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
-                &#9888; Cancels at end of current period
-              </p>
-            )}
+
+      {subscription && isActive && (
+        <CardContent className="space-y-3">
+          {/* Period dates — 2-col grid so dates never wrap */}
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground">Period start</p>
+              <p className="text-sm font-medium">{formatDate(subscription.currentPeriodStart)}</p>
+            </div>
+            <div className="space-y-0.5">
+              <p className="text-xs text-muted-foreground">Renews on</p>
+              <p className="text-sm font-medium">{formatDate(subscription.currentPeriodEnd)}</p>
+            </div>
           </div>
-        )}
+
+          {subscription.cancelAtPeriodEnd && (
+            <p className="rounded-md bg-yellow-50 px-3 py-1.5 text-xs text-yellow-700 dark:bg-yellow-900/20 dark:text-yellow-400">
+              &#9888;&#xFE0E; Cancels at end of current billing period
+            </p>
+          )}
+        </CardContent>
+      )}
+
+      <CardFooter className="mt-auto">
         {subscription ? (
           <SubscriptionActions subscription={subscription} />
         ) : (
-          <div className="flex flex-wrap gap-2">
-            <Button size="sm" render={<Link href="/pricing" />} nativeButton={false}>
-              View Plans
-            </Button>
-          </div>
+          <Button size="sm" variant="outline" render={<Link href="/pricing" />} nativeButton={false}>
+            View Plans
+          </Button>
         )}
-      </CardContent>
+      </CardFooter>
     </Card>
   );
 }
