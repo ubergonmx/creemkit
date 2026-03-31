@@ -10,6 +10,7 @@ import {
   pauseSubscription,
 } from '@/lib/creem/client';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 import { PLANS, type Subscription } from '../types';
 import { createCheckoutSchema } from '../schema';
 
@@ -165,6 +166,7 @@ export async function cancelUserSubscription(
         .update({ status: 'canceled' })
         .eq('creem_subscription_id', sub.creem_subscription_id);
     }
+    revalidatePath('/dashboard/billing');
     return {};
   } catch (e) {
     return { error: (e as Error).message };
@@ -197,6 +199,7 @@ export async function resumeUserSubscription(): Promise<{ error?: string }> {
       .from('subscriptions')
       .update({ cancel_at_period_end: false, status: 'active' })
       .eq('creem_subscription_id', sub.creem_subscription_id);
+    revalidatePath('/dashboard/billing');
     return {};
   } catch (e) {
     return { error: (e as Error).message };

@@ -17,7 +17,6 @@ import {
 import {
   cancelUserSubscription,
   resumeUserSubscription,
-  pauseUserSubscription,
   openCustomerPortal,
 } from '@/features/billing/actions';
 import type { Subscription } from '@/features/billing/types';
@@ -28,7 +27,6 @@ export function ManageSubscription({ subscription }: { subscription: Subscriptio
   const [cancelMode, setCancelMode] = useState<'scheduled' | 'immediate'>('scheduled');
 
   const isActive = subscription.status === 'active' || subscription.status === 'trialing';
-  const isPaused = subscription.status === 'paused';
 
   async function handleCancel() {
     startTransition(async () => {
@@ -56,24 +54,11 @@ export function ManageSubscription({ subscription }: { subscription: Subscriptio
     });
   }
 
-  async function handlePause() {
-    startTransition(async () => {
-      const result = await pauseUserSubscription();
-      if (result.error) {
-        toast.error(result.error);
-      } else {
-        toast.success('Subscription paused.');
-      }
-    });
-  }
-
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-base">Manage Subscription</CardTitle>
-        <CardDescription>
-          Cancel, pause, or manage your plan via the customer portal.
-        </CardDescription>
+        <CardDescription>Cancel or manage your plan via the customer portal.</CardDescription>
       </CardHeader>
       <CardContent className="flex flex-wrap gap-3">
         {/* Customer Portal */}
@@ -85,19 +70,6 @@ export function ManageSubscription({ subscription }: { subscription: Subscriptio
 
         {/* Resume (shown when scheduled to cancel) */}
         {subscription.cancelAtPeriodEnd && (
-          <Button variant="default" size="sm" disabled={pending} onClick={handleResume}>
-            Resume Subscription
-          </Button>
-        )}
-
-        {/* Pause / Resume paused */}
-        {isActive && !subscription.cancelAtPeriodEnd && (
-          <Button variant="outline" size="sm" disabled={pending} onClick={handlePause}>
-            Pause Subscription
-          </Button>
-        )}
-
-        {isPaused && (
           <Button variant="default" size="sm" disabled={pending} onClick={handleResume}>
             Resume Subscription
           </Button>
@@ -126,7 +98,7 @@ export function ManageSubscription({ subscription }: { subscription: Subscriptio
                     onChange={() => setCancelMode('scheduled')}
                   />
                   <span className="text-sm">
-                    <strong>At end of period</strong> — keep access until{' '}
+                    <strong>At end of period</strong> &mdash; keep access until{' '}
                     {subscription.currentPeriodEnd
                       ? new Date(subscription.currentPeriodEnd).toLocaleDateString()
                       : 'period end'}
@@ -141,7 +113,7 @@ export function ManageSubscription({ subscription }: { subscription: Subscriptio
                     onChange={() => setCancelMode('immediate')}
                   />
                   <span className="text-sm">
-                    <strong>Immediately</strong> — access ends now
+                    <strong>Immediately</strong> &mdash; access ends now
                   </span>
                 </label>
               </div>
