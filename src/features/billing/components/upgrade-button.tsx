@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useTransition } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import {
   AlertDialog,
@@ -26,6 +27,14 @@ export function UpgradeButton({
 }) {
   const [open, setOpen] = useState(false);
   const [pending, startTransition] = useTransition();
+  const router = useRouter();
+
+  function refreshAfterUpgrade() {
+    // Webhook-driven credits/transactions can arrive slightly after the upgrade mutation.
+    router.refresh();
+    window.setTimeout(() => router.refresh(), 1500);
+    window.setTimeout(() => router.refresh(), 4000);
+  }
 
   function handleConfirm() {
     startTransition(async () => {
@@ -34,7 +43,8 @@ export function UpgradeButton({
       if (result.error) {
         toast.error(result.error);
       } else {
-        toast.success('Plan updated successfully!');
+        toast.success('Plan updated. Credits and transaction history may take a few seconds.');
+        refreshAfterUpgrade();
       }
     });
   }

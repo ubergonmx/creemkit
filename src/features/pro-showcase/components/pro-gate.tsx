@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { IconLock, IconCrown } from '@tabler/icons-react';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 
 type ProGateProps = {
   isLocked: boolean;

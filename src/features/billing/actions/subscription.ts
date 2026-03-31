@@ -11,6 +11,13 @@ import {
 import { refresh, revalidatePath } from 'next/cache';
 import type { Subscription } from '../types';
 
+function revalidateBillingViews() {
+  // Revalidate the concrete billing page plus dashboard surfaces that show plan/credits.
+  revalidatePath('/dashboard/settings/billing');
+  revalidatePath('/dashboard');
+  revalidatePath('/dashboard', 'layout');
+}
+
 function mapRow(row: Record<string, unknown>): Subscription {
   return {
     id: row.id as string,
@@ -71,7 +78,7 @@ export async function cancelUserSubscription(): Promise<{ error?: string }> {
       .from('subscriptions')
       .update({ cancel_at_period_end: true })
       .eq('creem_subscription_id', sub.creem_subscription_id);
-    revalidatePath('/dashboard', 'layout');
+    revalidateBillingViews();
     refresh();
     return {};
   } catch (e) {
@@ -94,7 +101,7 @@ export async function resumeUserSubscription(): Promise<{ error?: string }> {
       .from('subscriptions')
       .update({ cancel_at_period_end: false, status: 'active' })
       .eq('creem_subscription_id', sub.creem_subscription_id);
-    revalidatePath('/dashboard', 'layout');
+    revalidateBillingViews();
     refresh();
     return {};
   } catch (e) {
@@ -119,7 +126,7 @@ export async function upgradeUserSubscription(
       .from('subscriptions')
       .update({ plan_id: newProductId, status: 'active', cancel_at_period_end: false })
       .eq('creem_subscription_id', sub.creem_subscription_id);
-    revalidatePath('/dashboard', 'layout');
+    revalidateBillingViews();
     refresh();
     return {};
   } catch (e) {
@@ -142,7 +149,7 @@ export async function pauseUserSubscription(): Promise<{ error?: string }> {
       .from('subscriptions')
       .update({ status: 'paused' })
       .eq('creem_subscription_id', sub.creem_subscription_id);
-    revalidatePath('/dashboard', 'layout');
+    revalidateBillingViews();
     refresh();
     return {};
   } catch (e) {

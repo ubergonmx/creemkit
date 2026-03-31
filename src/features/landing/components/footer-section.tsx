@@ -1,7 +1,7 @@
 'use client';
 
 import { Logo } from '@/components/logo';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 import { useTheme } from 'next-themes';
 import { IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
 import { cn } from '@/lib/utils';

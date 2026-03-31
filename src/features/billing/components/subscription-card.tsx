@@ -12,7 +12,7 @@ import {
 import { SubscriptionActions } from './subscription-actions';
 import { planNameFromId } from '@/features/billing/types';
 import type { Subscription } from '@/features/billing/types';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 
 type Props = {
   subscription: Subscription | null;

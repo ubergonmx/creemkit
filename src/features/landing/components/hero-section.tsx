@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Link from '@/components/app-link';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';

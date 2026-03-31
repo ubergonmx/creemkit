@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 
 import { NavMain } from '@/features/dashboard/components/nav-main';
 import { NavFeatures } from './nav-features';

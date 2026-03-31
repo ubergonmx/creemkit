@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Field, FieldDescription, FieldGroup, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 import { signup } from '@/features/auth/actions/auth';
 
 export function SignupForm({ className, ...props }: React.ComponentProps<'div'>) {

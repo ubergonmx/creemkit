@@ -5,7 +5,7 @@ import { UrlToast } from '@/components/url-toast';
 import { Logo } from '@/components/logo';
 import { LOGIN_ERRORS } from '@/features/auth/errors';
 import { resolveError } from '@/lib/errors';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 
 export const metadata: Metadata = {
   title: 'Log in',

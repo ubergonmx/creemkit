@@ -1,17 +1,3 @@
-// ---------- Creem webhook event types ----------
-export type CreemWebhookEventType =
-  | 'checkout.completed'
-  | 'subscription.active'
-  | 'subscription.paid'
-  | 'subscription.past_due'
-  | 'subscription.unpaid'
-  | 'subscription.canceled'
-  | 'subscription.expired'
-  | 'subscription.trialing'
-  | 'subscription.paused'
-  | 'subscription.update'
-  | 'refund.created';
-
 // ---------- App-level types ----------
 export type SubscriptionStatus =
   | 'active'

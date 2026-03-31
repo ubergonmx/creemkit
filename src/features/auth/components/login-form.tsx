@@ -12,7 +12,7 @@ import {
 } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 
 import { GitHub, Google } from './provider-icons';
 import { login, loginWithOAuth } from '@/features/auth/actions/auth';

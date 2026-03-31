@@ -27,7 +27,7 @@ import {
   IconDeviceDesktop,
 } from '@tabler/icons-react';
 import { logout } from '@/features/auth/actions/auth';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 import { useTheme } from 'next-themes';
 import { cn } from '@/lib/utils';
 

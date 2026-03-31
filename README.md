@@ -1,4 +1,4 @@
-![CreemKit Header](./src/app/opengraph-image.png)
+![CreemKit Header](./src/app/opengraph-image.jpg)
 
 # CreemKit - Next.js + Supabase + Creem Starter
 

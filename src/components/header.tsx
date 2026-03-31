@@ -1,5 +1,5 @@
 'use client';
-import Link from 'next/link';
+import Link from '@/components/app-link';
 import { Logo } from '@/components/logo';
 import { IconMenu2, IconX } from '@tabler/icons-react';
 import { Button } from '@/components/ui/button';

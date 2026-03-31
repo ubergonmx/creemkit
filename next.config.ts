@@ -22,16 +22,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   experimental: {
     viewTransition: true,
+    turbopackFileSystemCacheForBuild: true,
   },
   pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
   typescript: {
     tsconfigPath: isProd ? 'tsconfig.build.json' : 'tsconfig.json',
-  },
-  images: {
-    remotePatterns: [
-      // Add allowed image domains here, e.g.:
-      // { protocol: 'https', hostname: 'avatars.githubusercontent.com' },
-    ],
   },
   // Configure dev-only trusted origins via NEXT_ALLOWED_DEV_ORIGINS (comma-separated).
   allowedDevOrigins,
